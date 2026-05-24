@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cardápio de Dopamina</title>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1a0a2e; }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes checkPop {
+      0%   { transform: scale(0.5); opacity: 0; }
+      60%  { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    const menuData = {
+      aperitivos: {
+        label: "Aperitivos", time: "5 min", emoji: "⚡", accent: "#FF6B35",
+        description: "Movimento rápido para acordar o cérebro",
+        items: [
+          { name: "Salto no escuro",      desc: "Abra um livro aleatório, leia 1 parágrafo e escreva 1 frase de reação.",                                     tag: "leitura relâmpago" },
+          { name: "Estica e foca",        desc: "10 alongamentos guiados mentalmente: pescoço, ombros, costas, quadril. Sinta cada músculo.",                 tag: "corpo ativo" },
+          { name: "Câmera na janela",     desc: "Fotografe 3 coisas pela janela com perspectivas que você nunca tentou antes.",                               tag: "olhar novo" },
+          { name: "Playlist surpresa",    desc: "Coloque shuffle numa playlist que você nunca ouviu. Dance pelos primeiros 90 segundos, sem cerimônia.",       tag: "movimento livre" },
+          { name: "Equação do dia",       desc: "Resolva 3 puzzles de lógica no Lumosity ou no papel. Cronometra e tenta bater o tempo.",                     tag: "raciocínio rápido" },
+          { name: "Chuva de palavras",    desc: "Escolha uma cor. Em 3 minutos, escreva todas as palavras que ela evoca. Sem censura.",                        tag: "associação livre" },
+        ],
+      },
+      pratos: {
+        label: "Pratos Principais", time: "20 min", emoji: "🔥", accent: "#C0392B",
+        description: "Trabalho profundo com foco total",
+        items: [
+          { name: "Pomodoro de escrita",    desc: "Escreva sem parar por 20 minutos sobre qualquer tema. Nada de editar — só vazar.",                                     tag: "fluxo contínuo" },
+          { name: "Problema do dia",        desc: "Escolha um desafio do trabalho. Destrinche em partes menores, estime 3 soluções e escolha uma para testar.",           tag: "resolução profunda" },
+          { name: "Pesquisa de toca",       desc: "Escolha um tema que te intriga. Abra 5 abas, leia todas, e monte 1 mapa mental com o que aprendeu.",                   tag: "aprendizagem ativa" },
+          { name: "Carta para o futuro",    desc: "Escreva para você daqui 5 anos. O que está construindo? O que teme? O que deseja? Sem filtro.",                        tag: "reflexão profunda" },
+          { name: "Skill sprint",           desc: "Dedique 20 minutos ao aprendizado de uma habilidade técnica: código, idioma, instrumento. Um módulo por vez.",         tag: "aprendizado técnico" },
+          { name: "Debate com você mesmo",  desc: "Escolha uma opinião que você tem. Escreva o melhor argumento contrário que conseguir. Muda seu ponto de vista?",       tag: "pensamento crítico" },
+        ],
+      },
+      desenho: {
+        label: "Desenho", time: "15 min", emoji: "✏️", accent: "#3B82F6",
+        description: "Expressão visual sem julgamento",
+        items: [
+          { name: "Retrato de memória",     desc: "Desenhe o rosto de alguém que você ama sem olhar para foto nenhuma. Só o que a memória guarda.",              tag: "memória visual" },
+          { name: "Mão cega",               desc: "Escolha um objeto na sua frente. Desenhe-o sem tirar o lápis do papel e sem olhar para o papel.",             tag: "observação pura" },
+          { name: "Mapa do bairro",         desc: "Desenhe de memória o mapa do bairro onde você cresceu. Ruas, casas, atalhos que só você conhecia.",           tag: "cartografia afetiva" },
+          { name: "Anatomia de planta",     desc: "Pegue uma folha ou flor. Desenhe em detalhe como se fosse um caderno científico do século XIX.",              tag: "observação científica" },
+          { name: "Cena em 5 linhas",       desc: "Descreva mentalmente uma cena do dia. Agora tente representá-la usando no máximo 5 linhas.",                  tag: "síntese visual" },
+          { name: "Autorretrato às cegas",  desc: "Olhe no espelho por 30 segundos. Feche os olhos. Desenhe o que ficou.",                                      tag: "percepção de si" },
+        ],
+      },
+      acompanhamentos: {
+        label: "Acompanhamentos", time: "10 min", emoji: "🎨", accent: "#27AE60",
+        description: "Brincadeira criativa sem objetivo",
+        items: [
+          { name: "Doodle sem tema",       desc: "Papel em branco. Caneta. Comece com uma linha e veja onde ela vai. Proibido planejar.",                         tag: "desenho livre" },
+          { name: "Remix de receita",      desc: "Pegue uma receita simples que você conhece e substitua 2 ingredientes por coisas que tiver em casa.",           tag: "criatividade culinária" },
+          { name: "Haiku do momento",      desc: "Observe o ambiente agora. Escreva um haiku (5-7-5 sílabas) sobre o que está vendo ou sentindo.",               tag: "poesia instantânea" },
+          { name: "Jogo de personagem",    desc: "Crie um personagem de uma frase: nome, profissão bizarra, e maior medo. Depois, escreva seu monólogo interno.", tag: "ficção rápida" },
+          { name: "Arranjo improvisado",   desc: "Pegue 5 objetos aleatórios da mesa. Monte uma composição visual e fotografe como se fosse arte.",               tag: "arte acidental" },
+          { name: "Playlist da cena",      desc: "Escolha uma memória vívida. Monte uma playlist de 5 músicas que seriam a trilha sonora dessa cena.",            tag: "memória sensorial" },
+        ],
+      },
+    };
+
+    const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+    function App() {
+      const [selected, setSelected] = useState({});
+      const [revealed, setRevealed] = useState({});
+      const [done, setDone]         = useState({});
+
+      const roll = (key) => {
+        setSelected(s => ({ ...s, [key]: getRandom(menuData[key].items) }));
+        setRevealed(r => ({ ...r, [key]: true }));
+        setDone(d => ({ ...d, [key]: false }));
+      };
+
+      const markDone = (key) => {
+        setDone(d => ({ ...d, [key]: true }));
+        setTimeout(() => {
+          setRevealed(r => ({ ...r, [key]: false }));
+          setDone(d => ({ ...d, [key]: false }));
+        }, 1800);
+      };
+
+      const totalDone = Object.values(done).filter(Boolean).length;
+
+      return (
+        <div style={{
+          minHeight: "100vh",
+          background: "linear-gradient(145deg,#1a0a2e 0%,#16213e 50%,#0f3460 100%)",
+          fontFamily: "Georgia,'Times New Roman',serif",
+          padding: "0",
+        }}>
+          <div style={{ maxWidth: 760, margin: "0 auto", padding: "40px 20px 60px" }}>
+
+            {/* Header */}
+            <div style={{ textAlign: "center", marginBottom: 48 }}>
+              <div style={{
+                display: "inline-block", background: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(255,255,255,0.12)", borderRadius: 40,
+                padding: "6px 20px", marginBottom: 20,
+              }}>
+                <span style={{ color:"#A78BFA", fontSize:12, letterSpacing:3, textTransform:"uppercase", fontFamily:"monospace" }}>
+                  MENU DO DIA
+                </span>
+              </div>
+              <h1 style={{ color:"#fff", fontSize:"clamp(28px,6vw,52px)", fontWeight:400, margin:"0 0 12px", letterSpacing:-1, lineHeight:1.1 }}>
+                Cardápio de{" "}
+                <span style={{ background:"linear-gradient(90deg,#F59E0B,#EF4444,#8B5CF6)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>
+                  Dopamina
+                </span>
+              </h1>
+              <p style={{ color:"rgba(255,255,255,0.45)", fontSize:16, margin:0, fontStyle:"italic" }}>
+                Para cérebros que precisam de mais do que o comum oferece
+              </p>
+              {totalDone > 0 && (
+                <div style={{
+                  marginTop:20, display:"inline-flex", alignItems:"center", gap:8,
+                  background:"rgba(167,139,250,0.15)", border:"1px solid rgba(167,139,250,0.3)",
+                  borderRadius:20, padding:"6px 16px",
+                }}>
+                  <span style={{ color:"#A78BFA", fontSize:14 }}>
+                    ✓ {totalDone} prato{totalDone > 1 ? "s" : ""} concluído{totalDone > 1 ? "s" : ""} hoje
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {/* Cards */}
+            {Object.entries(menuData).map(([key, section]) => {
+              const isRevealed = !!revealed[key];
+              const isDone     = !!done[key];
+              const card       = selected[key];
+
+              return (
+                <div key={key} style={{
+                  marginBottom:24, borderRadius:20, overflow:"hidden",
+                  background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.08)",
+                }}>
+                  {/* Section header */}
+                  <div style={{
+                    display:"flex", alignItems:"center", justifyContent:"space-between",
+                    padding:"20px 24px", borderBottom:"1px solid rgba(255,255,255,0.06)",
+                    background:`linear-gradient(90deg,${section.accent}18,transparent)`,
+                    flexWrap:"wrap", gap:12,
+                  }}>
+                    <div style={{ display:"flex", alignItems:"center", gap:14 }}>
+                      <span style={{
+                        width:44, height:44, borderRadius:12, flexShrink:0,
+                        background:`${section.accent}22`, border:`1px solid ${section.accent}44`,
+                        display:"flex", alignItems:"center", justifyContent:"center", fontSize:22,
+                      }}>{section.emoji}</span>
+                      <div>
+                        <div style={{ display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
+                          <h2 style={{ color:"#fff", fontSize:20, fontWeight:400, margin:0 }}>{section.label}</h2>
+                          <span style={{
+                            background:`${section.accent}22`, border:`1px solid ${section.accent}55`,
+                            color:section.accent, fontSize:11, padding:"2px 10px", borderRadius:20,
+                            fontFamily:"monospace", letterSpacing:1,
+                          }}>{section.time}</span>
+                        </div>
+                        <p style={{ color:"rgba(255,255,255,0.4)", fontSize:13, margin:"2px 0 0", fontStyle:"italic" }}>
+                          {section.description}
+                        </p>
+                      </div>
+                    </div>
+                    <button onClick={() => roll(key)} style={{
+                      background:`linear-gradient(135deg,${section.accent},${section.accent}aa)`,
+                      color:"#fff", border:"none", borderRadius:12, padding:"10px 20px",
+                      cursor:"pointer", fontSize:13, fontFamily:"monospace", letterSpacing:1,
+                      fontWeight:600, whiteSpace:"nowrap",
+                    }}>SORTEAR</button>
+                  </div>
+
+                  {/* Revealed */}
+                  {isRevealed && card && (
+                    <div style={{ padding:"20px 24px", animation:"slideIn 0.35s cubic-bezier(0.16,1,0.3,1)" }}>
+                      <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", gap:16 }}>
+                        <div style={{ flex:1 }}>
+                          <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:8, flexWrap:"wrap" }}>
+                            <h3 style={{ color:"#fff", fontSize:17, margin:0, fontWeight:400 }}>{card.name}</h3>
+                            <span style={{
+                              background:`${section.accent}18`, color:section.accent,
+                              fontSize:10, padding:"2px 9px", borderRadius:20,
+                              fontFamily:"monospace", letterSpacing:0.5, textTransform:"uppercase",
+                            }}>{card.tag}</span>
+                          </div>
+                          <p style={{ color:"rgba(255,255,255,0.65)", fontSize:15, margin:0, lineHeight:1.7 }}>
+                            {card.desc}
+                          </p>
+                        </div>
+                        <button onClick={() => markDone(key)} style={{
+                          flexShrink:0, width:40, height:40, borderRadius:"50%",
+                          border: isDone ? "none" : "2px solid rgba(255,255,255,0.2)",
+                          background: isDone ? "#27AE60" : "transparent",
+                          color: isDone ? "#fff" : "rgba(255,255,255,0.3)",
+                          fontSize:18, cursor:"pointer",
+                          display:"flex", alignItems:"center", justifyContent:"center",
+                          animation: isDone ? "checkPop 0.4s cubic-bezier(0.16,1,0.3,1)" : "none",
+                        }}>✓</button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Idle dots */}
+                  {!isRevealed && (
+                    <div style={{ padding:"16px 24px", display:"flex", alignItems:"center", gap:8 }}>
+                      {section.items.map((_,i) => (
+                        <div key={i} style={{
+                          width:6, height:6, borderRadius:"50%",
+                          background:`${section.accent}33`, border:`1px solid ${section.accent}55`,
+                        }}/>
+                      ))}
+                      <span style={{ color:"rgba(255,255,255,0.25)", fontSize:12, marginLeft:6, fontFamily:"monospace" }}>
+                        {section.items.length} opções disponíveis
+                      </span>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+
+            <div style={{ textAlign:"center", marginTop:40 }}>
+              <p style={{ color:"rgba(255,255,255,0.2)", fontSize:13, fontStyle:"italic" }}>
+                Não existe ordem certa. Existe o que o seu cérebro pede agora.
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
