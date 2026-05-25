@@ -4,13 +4,18 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Cardápio de Dopamina</title>
+<link rel="stylesheet" href="https://use.typekit.net/rjs6bjw.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     min-height: 100vh;
     background: linear-gradient(145deg, #1a0a2e 0%, #16213e 50%, #0f3460 100%);
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: "degular", sans-serif;
+    font-weight: 400;
+    font-style: normal;
     color: #fff;
     padding: 40px 20px 80px;
   }
@@ -27,19 +32,21 @@
     border-radius: 40px;
     padding: 6px 20px;
     margin-bottom: 20px;
-    font-family: monospace;
-    font-size: 12px;
-    letter-spacing: 3px;
+    font-family: "degular", sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 4px;
     text-transform: uppercase;
     color: #A78BFA;
   }
 
   h1 {
-    font-size: clamp(28px, 6vw, 52px);
-    font-weight: 400;
-    letter-spacing: -1px;
-    line-height: 1.1;
-    margin-bottom: 12px;
+    font-family: "degular-display", sans-serif;
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 300;
+    letter-spacing: -1.5px;
+    line-height: 1.05;
+    margin-bottom: 14px;
   }
 
   .gradient-text {
@@ -51,8 +58,10 @@
 
   .subtitle {
     color: rgba(255,255,255,0.45);
-    font-size: 16px;
+    font-family: "degular", sans-serif;
+    font-size: 17px;
     font-style: italic;
+    font-weight: 300;
   }
 
   .counter {
@@ -112,32 +121,37 @@
   }
 
   .section-name {
-    font-size: 20px; font-weight: 400; color: #fff;
+    font-family: "degular", sans-serif;
+    font-size: 20px; font-weight: 500; color: #fff;
   }
 
   .time-pill {
     font-size: 11px;
     padding: 2px 10px;
     border-radius: 20px;
-    font-family: monospace;
-    letter-spacing: 1px;
+    font-family: "degular", sans-serif;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
   }
 
   .section-desc {
     font-size: 13px;
     color: rgba(255,255,255,0.4);
     font-style: italic;
+    font-family: "degular", sans-serif;
   }
 
   .btn-roll {
     border: none;
     border-radius: 12px;
-    padding: 10px 20px;
+    padding: 10px 22px;
     cursor: pointer;
-    font-size: 13px;
-    font-family: monospace;
-    letter-spacing: 1px;
-    font-weight: 700;
+    font-size: 11px;
+    font-family: "degular", sans-serif;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
     color: #fff;
     white-space: nowrap;
     transition: opacity .15s ease;
@@ -156,10 +170,13 @@
     border-radius: 50%;
   }
   .idle-label {
-    font-size: 12px;
+    font-size: 11px;
     color: rgba(255,255,255,0.25);
     margin-left: 6px;
-    font-family: monospace;
+    font-family: "degular", sans-serif;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
   }
 
   /* ── REVEALED ── */
@@ -183,19 +200,31 @@
     display: flex; align-items: center; gap: 10px;
     flex-wrap: wrap; margin-bottom: 8px;
   }
-  .item-name { font-size: 17px; font-weight: 400; color: #fff; }
+  .item-name {
+    font-family: "degular", sans-serif;
+    font-size: 18px; font-weight: 500; color: #fff;
+  }
 
   .tag-pill {
     font-size: 10px;
     padding: 2px 9px;
     border-radius: 20px;
-    font-family: monospace;
-    letter-spacing: .5px;
+    font-family: "degular", sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
     text-transform: uppercase;
   }
 
   .item-desc {
     font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+  }
+
+  .item-desc {
+    font-family: "degular", sans-serif;
+    font-size: 15px;
+    font-weight: 400;
     color: rgba(255,255,255,0.65);
     line-height: 1.7;
   }
@@ -228,8 +257,10 @@
     text-align: center;
     margin-top: 40px;
     color: rgba(255,255,255,0.2);
-    font-size: 13px;
+    font-family: "degular", sans-serif;
+    font-size: 14px;
     font-style: italic;
+    letter-spacing: 0.3px;
   }
 </style>
 </head>
@@ -249,7 +280,19 @@
   <!-- Cards rendered by JS -->
   <div id="menu"></div>
 
-  <p class="footer">Não existe ordem certa. Existe o que o seu cérebro pede agora.</p>
+  <div class="footer">
+    <p style="margin-bottom: 28px; color: rgba(255,255,255,0.6); font-family: 'Shantell Sans', cursive; font-weight: 700; font-style: normal; font-size: 15px; letter-spacing: 0.2px; font-variation-settings: 'BNCE' 100, 'INFM' 100;">não existe certo ou errado. o papel aceita tudo.</p>
+    <div style="width: 40px; height: 1px; background: rgba(255,255,255,0.1); margin: 0 auto 28px;"></div>
+    <p style="color: rgba(255,255,255,0.35); margin-bottom: 8px;">feito com carinho por miguel 🌈</p>
+    <p style="color: rgba(255,255,255,0.25); margin-bottom: 10px; font-style: normal; font-size: 13px;">quer mais ideias pra cuidar de si?</p>
+    <p style="font-style: normal; font-size: 13px;">
+      <a href="https://miguelcela.com" target="_blank" rel="noopener"
+         style="color: #A78BFA; text-decoration: none; letter-spacing: 0.5px; border-bottom: 1px solid rgba(167,139,250,0.3); padding-bottom: 1px; transition: border-color .2s;">miguelcela.com</a>
+      <span style="color: rgba(255,255,255,0.2); margin: 0 10px;">✧</span>
+      <a href="https://www.instagram.com/miguelcela" target="_blank" rel="noopener"
+         style="color: #A78BFA; text-decoration: none; letter-spacing: 0.5px; border-bottom: 1px solid rgba(167,139,250,0.3); padding-bottom: 1px; transition: border-color .2s;">@miguelcela</a>
+    </p>
+  </div>
 </div>
 
 <script>
