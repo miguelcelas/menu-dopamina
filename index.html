@@ -1,677 +1,982 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Cardápio de Dopamina</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌈</text></svg>">
-<link rel="stylesheet" href="https://use.typekit.net/rjs6bjw.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@400;700&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    min-height: 100vh;
-    background: linear-gradient(160deg, #0a0806 0%, #0e0b09 60%, #110d0a 100%);
-    font-family: "degular", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    color: #fff;
-    padding: 40px 20px 80px;
-  }
-
-  .wrapper { max-width: 760px; margin: 0 auto; }
-
-  /* ── HEADER ── */
-  .header { text-align: center; margin-bottom: 48px; }
-
-  .badge {
-    display: inline-block;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 40px;
-    padding: 6px 20px;
-    margin-bottom: 20px;
-    font-family: "degular", sans-serif;
-    font-weight: 600;
-    font-size: 11px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: #ff3506;
-  }
-
-  h1 {
-    font-family: "degular-display", sans-serif;
-    font-size: clamp(32px, 6vw, 56px);
-    font-weight: 300;
-    letter-spacing: -1.5px;
-    line-height: 1.05;
-    margin-bottom: 14px;
-  }
-
-  .gradient-text {
-    background: linear-gradient(90deg, #ffc900, #ff3506, #cc1344);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .subtitle {
-    color: rgba(255,255,255,0.45);
-    font-family: "degular", sans-serif;
-    font-size: 17px;
-    font-style: normal;
-    font-weight: 300;
-  }
-
-  .counter {
-    display: none;
-    margin-top: 20px;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-  .counter.visible { display: flex; }
-  .counter-pill {
-    background: rgba(255,53,6,0.15);
-    border: 1px solid rgba(255,53,6,0.3);
-    border-radius: 20px;
-    padding: 6px 16px;
-    color: #ff3506;
-    font-size: 14px;
-  }
-
-  /* ── CARD ── */
-  .card {
-    margin-bottom: 24px;
-    border-radius: 20px;
-    overflow: hidden;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: transform .2s ease, box-shadow .2s ease;
-  }
-  .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.35);
-  }
-
-  .card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 24px;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .card-meta { display: flex; align-items: center; gap: 14px; }
-
-  .icon-box {
-    width: 44px; height: 44px;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-    flex-shrink: 0;
-  }
-
-  .section-title-row {
-    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-    margin-bottom: 4px;
-  }
-
-  .section-name {
-    font-family: "degular", sans-serif;
-    font-size: 20px; font-weight: 500; color: #fff;
-  }
-
-  .time-pill {
-    font-size: 11px;
-    padding: 2px 10px;
-    border-radius: 20px;
-    font-family: "degular", sans-serif;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-  }
-
-  .section-desc {
-    font-size: 13px;
-    color: rgba(255,255,255,0.4);
-    font-style: normal;
-    font-family: "degular", sans-serif;
-  }
-
-  .btn-roll {
-    border: none;
-    border-radius: 12px;
-    padding: 10px 22px;
-    cursor: pointer;
-    font-size: 11px;
-    font-family: "degular", sans-serif;
-    font-weight: 800;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: #fff;
-    white-space: nowrap;
-    transition: opacity .15s ease;
-  }
-  .btn-roll:hover { opacity: 0.8; }
-
-  /* ── IDLE DOTS ── */
-  .idle-row {
-    padding: 16px 24px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-  }
-  .idle-label {
-    font-size: 11px;
-    color: rgba(255,255,255,0.25);
-    margin-left: 6px;
-    font-family: "degular", sans-serif;
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  /* ── REVEALED ── */
-  .revealed-area {
-    padding: 20px 24px;
-    animation: slideIn .35s cubic-bezier(0.16,1,0.3,1);
-  }
-  @keyframes slideIn {
-    from { opacity:0; transform:translateY(-10px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
-
-  .revealed-inner {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 16px;
-  }
-
-  .item-title-row {
-    display: flex; align-items: center; gap: 10px;
-    flex-wrap: wrap; margin-bottom: 8px;
-  }
-  .item-name {
-    font-family: "degular", sans-serif;
-    font-size: 18px; font-weight: 500; color: #fff;
-  }
-
-  .tag-pill {
-    font-size: 10px;
-    padding: 2px 9px;
-    border-radius: 20px;
-    font-family: "degular", sans-serif;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  .item-desc {
-    font-size: 15px;
-    color: rgba(255,255,255,0.65);
-    line-height: 1.7;
-  }
-
-  .item-desc {
-    font-family: "degular", sans-serif;
-    font-size: 15px;
-    font-weight: 400;
-    color: rgba(255,255,255,0.65);
-    line-height: 1.7;
-  }
-
-  .btn-done {
-    flex-shrink: 0;
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.2);
-    background: transparent;
-    color: rgba(255,255,255,0.3);
-    font-size: 18px;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: all .2s ease;
-  }
-  .btn-done.checked {
-    background: #00a86b;
-    border-color: #00a86b;
-    color: #fff;
-    animation: checkPop .4s cubic-bezier(0.16,1,0.3,1);
-  }
-  @keyframes checkPop {
-    0%  { transform:scale(0.5); opacity:0; }
-    60% { transform:scale(1.2); }
-    100%{ transform:scale(1);   opacity:1; }
-  }
-
-  .footer {
-    text-align: center;
-    margin-top: 40px;
-    color: rgba(255,255,255,0.2);
-    font-family: "degular", sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    letter-spacing: 0.3px;
-  }
-</style>
-<!-- Google tag (gtag.js) — carrega mas aguarda consentimento -->
+<!-- ============================================================
+     GOOGLE ANALYTICS 4 + CONSENT MODE v2 (LGPD)
+     ID: G-FKFCQLR88N
+     O GA só envia dados após o usuário aceitar no banner.
+     ============================================================ -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FKFCQLR88N"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
 
-  // Consent mode: negado por padrão até usuário aceitar
+  // Estado inicial: TUDO negado (LGPD). Só libera depois do consent.
   gtag('consent', 'default', {
-    analytics_storage: 'denied',
-    ad_storage: 'denied',
-    wait_for_update: 500
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
   });
 
   gtag('js', new Date());
-  gtag('config', 'G-FKFCQLR88N', { anonymize_ip: true });
+  gtag('config', 'G-FKFCQLR88N', {
+    page_title: 'Cardápio de Dopamina',
+    anonymize_ip: true
+  });
+
+  // Lê decisão salva e aplica antes de qualquer evento
+  (function(){
+    try {
+      var saved = localStorage.getItem('cdd_consent');
+      if (saved === 'granted') {
+        gtag('consent', 'update', {
+          'analytics_storage': 'granted'
+        });
+      }
+    } catch(e) {}
+  })();
 </script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%88%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="https://use.typekit.net/rjs6bjw.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  :root {
+    --accent: #ff3506;
+    --bg-card: rgba(255,255,255,0.04);
+    --border-card: 1px solid rgba(255,255,255,0.08);
+    --text: #f5efe8;
+    --text-dim: rgba(245,239,232,0.62);
+    --text-faint: rgba(245,239,232,0.42);
+  }
+
+  body {
+    font-family: "degular", system-ui, sans-serif;
+    background: linear-gradient(160deg, #0a0806 0%, #0e0b09 60%, #110d0a 100%);
+    background-attachment: fixed;
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.4;
+  }
+
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 56px 28px 80px;
+  }
+
+  /* ---------- HEADER ---------- */
+  .top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+    margin-bottom: 48px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 6px 20px;
+    border-radius: 40px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.05);
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  h1 {
+    font-family: "degular-display", "degular", sans-serif;
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 300;
+    letter-spacing: -1.5px;
+    line-height: 1.05;
+    margin: 0;
+  }
+  h1 .word-card { color: var(--text); }
+  h1 .word-dop {
+    background: linear-gradient(90deg, #ffc900, #ff3506, #cc1344);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .subtitle {
+    color: rgba(255,255,255,0.45);
+    max-width: 540px;
+    font-size: 17px;
+    font-weight: 300;
+    margin: 2px 0 0;
+  }
+
+  .stats {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 18px;
+    color: var(--text-faint);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .stats .num {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 15px;
+    margin-right: 4px;
+  }
+
+  /* ---------- GRID ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 22px;
+  }
+
+  /* ---------- CARD ---------- */
+  .card {
+    --c: var(--accent);
+    position: relative;
+    border-radius: 20px;
+    border: var(--border-card);
+    background: var(--bg-card);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(6px);
+    transition: border-color .25s ease, transform .25s ease;
+  }
+  .card:hover { border-color: rgba(255,255,255,0.14); }
+
+  .card-head {
+    position: relative;
+    padding: 22px 22px 18px;
+    background:
+      linear-gradient(180deg, color-mix(in oklab, var(--c) 14%, transparent) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .head-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .head-id {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .icon {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    background: color-mix(in oklab, var(--c) 18%, transparent);
+    border: 1px solid color-mix(in oklab, var(--c) 30%, transparent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .head-text { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .head-text h2 {
+    font-family: "degular-display", "degular", sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-dim);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .counter {
+    font-size: 12px;
+    color: var(--text-faint);
+    letter-spacing: 0.04em;
+    opacity: 0;
+    transition: opacity .3s ease;
+  }
+  .counter.on { opacity: 1; }
+  .counter b { color: var(--c); font-weight: 700; }
+
+  .desc {
+    margin-top: 12px;
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* ---------- BODY ---------- */
+  .card-body {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    flex: 1;
+  }
+
+  /* idle */
+  .idle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 0 6px;
+    color: var(--text-faint);
+  }
+  .dots {
+    display: flex;
+    gap: 9px;
+  }
+  .dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    transition: background .25s ease, transform .25s ease;
+  }
+  .card:hover .dot:nth-child(1) { background: color-mix(in oklab, var(--c) 70%, transparent); }
+  .card:hover .dot:nth-child(2) { background: color-mix(in oklab, var(--c) 55%, transparent); transition-delay: .03s; }
+  .card:hover .dot:nth-child(3) { background: color-mix(in oklab, var(--c) 40%, transparent); transition-delay: .06s; }
+  .card:hover .dot:nth-child(4) { background: color-mix(in oklab, var(--c) 30%, transparent); transition-delay: .09s; }
+  .card:hover .dot:nth-child(5) { background: color-mix(in oklab, var(--c) 22%, transparent); transition-delay: .12s; }
+  .card:hover .dot:nth-child(6) { background: color-mix(in oklab, var(--c) 16%, transparent); transition-delay: .15s; }
+  .idle-label {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* revealed */
+  .revealed {
+    animation: slideIn .35s ease both;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .revealed .content { flex: 1; min-width: 0; }
+  .rev-name {
+    font-family: "degular-display", "degular", sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+    color: var(--text);
+  }
+  .rev-tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    color: var(--c);
+    background: color-mix(in oklab, var(--c) 14%, transparent);
+    border: 1px solid color-mix(in oklab, var(--c) 28%, transparent);
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .rev-desc {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .check {
+    flex-shrink: 0;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.03);
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s ease;
+  }
+  .check:hover {
+    border-color: var(--c);
+    color: var(--c);
+    background: color-mix(in oklab, var(--c) 10%, transparent);
+  }
+  .check.done {
+    background: var(--c);
+    border-color: var(--c);
+    color: #fff;
+    animation: checkPop .35s ease;
+  }
+
+  /* sortear */
+  .sortear {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fff;
+    background:
+      linear-gradient(135deg, var(--c) 0%, color-mix(in oklab, var(--c) 70%, #000) 100%);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.18) inset,
+      0 8px 24px -10px color-mix(in oklab, var(--c) 70%, transparent);
+    transition: transform .15s ease, box-shadow .25s ease, filter .2s ease;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .sortear:hover {
+    filter: brightness(1.08);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.18) inset,
+      0 12px 30px -10px color-mix(in oklab, var(--c) 70%, transparent);
+  }
+  .sortear:active { transform: translateY(1px); }
+  .sortear svg { width: 14px; height: 14px; }
+
+  /* ---------- ANIMATIONS ---------- */
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes checkPop {
+    0%   { transform: scale(0.5); }
+    60%  { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    margin-top: 80px;
+    text-align: center;
+  }
+  .foot-quote {
+    font-family: "Shantell Sans", system-ui, sans-serif;
+    font-variation-settings: 'BNCE' 100, 'INFM' 100;
+    font-weight: 400;
+    font-style: normal;
+    font-size: clamp(22px, 3vw, 30px);
+    line-height: 1.35;
+    color: var(--text);
+    max-width: 560px;
+    margin: 0 auto;
+  }
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+    margin: 36px auto 28px;
+    border: none;
+  }
+  .foot-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+  .foot-logo {
+    display: inline-flex;
+    align-items: center;
+    transition: transform .2s ease;
+  }
+  .foot-logo:hover { transform: scale(1.04); }
+  .foot-logo svg { height: 32px; width: auto; display: block; }
+  .foot-logo svg path { fill: #ff3506; }
+  .foot-links {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .foot-links a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in oklab, var(--accent) 35%, transparent);
+    padding-bottom: 1px;
+    transition: border-color .2s ease;
+  }
+  .foot-links a:hover { border-bottom-color: var(--accent); }
+  .foot-byline { font-size: 13px; color: var(--text-faint); }
+
+  @media (max-width: 600px) {
+    .page { padding: 36px 18px 56px; }
+    .grid { gap: 16px; }
+    .card-head, .card-body { padding: 18px; }
+  }
+
+  /* ---------- COOKIE BANNER ---------- */
+  .cookie-backdrop {
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 100%, rgba(255,53,6,0.18) 0%, transparent 50%),
+      rgba(0,0,0,0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .35s ease;
+  }
+  .cookie-backdrop.show { opacity: 1; pointer-events: auto; }
+
+  .cookie-banner {
+    position: fixed;
+    left: 50%;
+    bottom: 32px;
+    transform: translateX(-50%) translateY(160%) scale(.96);
+    width: calc(100% - 32px);
+    max-width: 560px;
+    background:
+      radial-gradient(circle at 0% 0%, rgba(255,201,0,0.10) 0%, transparent 40%),
+      radial-gradient(circle at 100% 100%, rgba(204,19,68,0.18) 0%, transparent 50%),
+      rgba(28, 22, 18, 0.98);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1.5px solid rgba(255,53,6,0.55);
+    border-radius: 20px;
+    padding: 26px 28px;
+    z-index: 1000;
+    box-shadow:
+      0 0 0 1px rgba(255,53,6,0.10),
+      0 30px 80px -10px rgba(0,0,0,0.8),
+      0 0 60px -10px rgba(255,53,6,0.45);
+    transition: transform .5s cubic-bezier(.34,1.4,.5,1), opacity .35s ease;
+    opacity: 0;
+    pointer-events: none;
+    animation: cookiePulse 2.6s ease-in-out infinite;
+  }
+  .cookie-banner.show {
+    transform: translateX(-50%) translateY(0) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  @keyframes cookiePulse {
+    0%, 100% { box-shadow:
+      0 0 0 1px rgba(255,53,6,0.10),
+      0 30px 80px -10px rgba(0,0,0,0.8),
+      0 0 60px -10px rgba(255,53,6,0.45); }
+    50% { box-shadow:
+      0 0 0 1px rgba(255,53,6,0.20),
+      0 30px 80px -10px rgba(0,0,0,0.8),
+      0 0 90px -10px rgba(255,53,6,0.65); }
+  }
+  .cookie-banner h3 {
+    font-family: "degular-display", "degular", sans-serif;
+    font-size: 22px;
+    margin: 0 0 8px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+  }
+  .cookie-banner h3 span[aria-hidden] {
+    font-size: 26px;
+    animation: cookieWiggle 3s ease-in-out infinite;
+    display: inline-block;
+    transform-origin: center;
+  }
+  @keyframes cookieWiggle {
+    0%, 92%, 100% { transform: rotate(0deg); }
+    94% { transform: rotate(-14deg); }
+    96% { transform: rotate(12deg); }
+    98% { transform: rotate(-8deg); }
+  }
+  .cookie-banner p {
+    margin: 0 0 18px;
+    color: rgba(245,239,232,0.78);
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+  .cookie-banner p a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in oklab, var(--accent) 35%, transparent);
+  }
+  .cookie-banner p a:hover { border-bottom-color: var(--accent); }
+  .cookie-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .cookie-btn {
+    flex: 1;
+    min-width: 110px;
+    padding: 13px 18px;
+    border-radius: 11px;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.04);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+  .cookie-btn:hover {
+    border-color: rgba(255,255,255,0.28);
+    background: rgba(255,255,255,0.08);
+  }
+  .cookie-btn.primary {
+    background: linear-gradient(135deg, var(--accent) 0%, #cc1344 100%);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 8px 24px -10px rgba(255,53,6,0.6);
+  }
+  .cookie-btn.primary:hover {
+    filter: brightness(1.08);
+  }
+  .cookie-reopen {
+    margin-top: 14px;
+    background: none;
+    border: none;
+    color: var(--text-faint);
+    font: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+  }
+  .cookie-reopen:hover { color: var(--text-dim); }
+
+  /* modal de detalhes */
+  .cookie-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease;
+  }
+  .cookie-modal.show { opacity: 1; pointer-events: auto; }
+  .cookie-modal-inner {
+    background: #15110d;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 16px;
+    padding: 28px;
+    max-width: 560px;
+    width: 100%;
+    max-height: 86vh;
+    overflow-y: auto;
+    color: var(--text);
+  }
+  .cookie-modal-inner h3 {
+    font-family: "degular-display", "degular", sans-serif;
+    font-size: 24px;
+    margin: 0 0 14px;
+  }
+  .cookie-modal-inner p { color: var(--text-dim); font-size: 14px; line-height: 1.6; margin: 0 0 12px; }
+  .cookie-modal-inner ul { color: var(--text-dim); font-size: 14px; line-height: 1.7; padding-left: 18px; margin: 0 0 16px; }
+  .cookie-modal-inner ul li b { color: var(--text); }
+</style>
 </head>
 <body>
-<div class="wrapper">
+  <main class="page">
+    <header class="top">
+      <span class="badge">Menu do Dia</span>
+      <h1>
+        <span class="word-card">Cardápio de </span><span class="word-dop">Dopamina</span>
+      </h1>
+      <p class="subtitle">Para cérebros que precisam de mais do que o comum oferece.</p>
+      <div class="stats" aria-hidden="true">
+        <span><span class="num">6</span> seções</span>
+        <span><span class="num">36</span> atividades</span>
+        <span><span class="num">5–20</span> min cada</span>
+      </div>
+    </header>
 
-  <!-- Header -->
-  <div class="header">
-    <div class="badge">Menu do Dia</div>
-    <h1>Cardápio de <span class="gradient-text">Dopamina</span></h1>
-    <p class="subtitle">Para cérebros que precisam de mais do que o comum oferece</p>
-    <div class="counter" id="counter">
-      <div class="counter-pill" id="counter-text"></div>
+    <section class="grid" id="grid" aria-label="Seções do cardápio"></section>
+
+    <footer>
+      <p class="foot-quote">
+        não existe certo ou errado.<br />
+        o papel aceita tudo.
+      </p>
+      <hr class="divider" />
+      <div class="foot-meta">
+        <span class="foot-byline">feito com carinho por miguel <span aria-hidden="true">🌈</span></span>
+        <a class="foot-logo" href="https://miguelcela.com" target="_blank" rel="noopener" aria-label="marca - miguel cela">
+          <svg role="img" aria-labelledby="logo-title" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 854.72 113.11">
+            <title id="logo-title">marca - miguel cela</title>
+            <g>
+              <path d="M67.62,38.78L23.34,111.31H0L51.35,27.53h19.75v72.17L115.38,27.53h19.75v83.78h-3.47V38.78l-44.29,72.53h-19.75V38.78Z" fill="#003bce"/>
+              <path d="M156.68,9.7c0,5.27-4.31,9.58-9.58,9.58s-9.58-4.31-9.58-9.58,4.31-9.7,9.58-9.7,9.58,4.31,9.58,9.7ZM148.78,27.53v83.78h-3.47V27.53h3.47Z" fill="#005139"/>
+              <path d="M200.48,92.16h6.46c14.24,0,38.3-5.75,40.46-19.99h-40.1v-3.47h43.57v42.61h-3.47v-24.78c-6.7,15.56-22.74,26.57-40.81,26.57h-5.63c-23.94,0-44.29-18.55-44.29-43.81s20.23-43.45,44.29-43.45h5.63c19.99,0,38.42,13.88,43.09,33.27l-5.51,1.08c-6.46-7.9-20.71-13.41-37.22-13.41h-6.46c-22.26,0-40.69,10.17-40.69,22.74s18.43,22.62,40.69,22.62Z" fill="#ee7a77"/>
+              <path d="M293.37,92.04c19.87,0,35.55-11.13,35.55-24.18V27.53h3.47v40.1c0,21.18-14.24,45.36-38.9,45.36h-.12c-25.25,0-38.9-24.9-38.9-45.36V27.53h3.47v40.34c0,12.93,15.68,24.18,35.43,24.18Z" fill="#cc1344"/>
+              <path d="M409.59,90.37v20.95h-71.21V27.53h71.21v20.95h-67.98v19.27h58.17v3.47h-58.17v19.15h67.98Z" fill="#550d24"/>
+              <path d="M415.93,27.53h3.47v62.84h62.12v20.95h-65.59V27.53Z" fill="#3b388c"/>
+              <path d="M556.33,25.85h4.55c21.66,0,38.9,13.88,43.57,33.27l-5.51,1.08c-6.46-7.9-20.71-13.41-37.1-13.41h-6.46c-22.26,0-40.81,10.17-40.81,22.74s18.55,22.62,40.81,22.62h6.46c16.4,0,30.64-5.51,37.1-13.41l5.51,1.08c-4.67,19.03-21.42,33.27-43.57,33.27h-4.55c-25.85,0-44.88-19.63-44.88-43.57s18.91-43.69,44.88-43.69Z" fill="#bce1e6"/>
+              <path d="M680.45,90.37v20.95h-71.22V27.53h71.22v20.95h-67.98v19.27h58.17v3.47h-58.17v19.15h67.98Z" fill="#e30829"/>
+              <path d="M686.8,27.53h3.47v62.84h62.12v20.95h-65.59V27.53Z" fill="#ffc900"/>
+              <path d="M815.47,27.53l39.26,83.78h-3.83l-14-29.92h-47.52l-14.36,29.92h-22.02l40.46-83.78h22.02ZM791.05,77.92h44.17l-21.78-46.32-22.38,46.32Z" fill="#ff3506"/>
+            </g>
+          </svg>
+        </a>
+        <span>quer mais ideias pra cuidar de si?</span>
+        <div class="foot-links">
+          <a href="https://miguelcela.com" target="_blank" rel="noopener" data-ga-link="site">miguelcela.com</a>
+          <a href="https://www.instagram.com/miguelcela" target="_blank" rel="noopener" data-ga-link="instagram">@miguelcela</a>
+        </div>
+        <button class="cookie-reopen" id="cookieReopen">Preferências de cookies</button>
+      </div>
+    </footer>
+
+    <!-- COOKIE BANNER -->
+    <div class="cookie-backdrop" id="cookieBackdrop" aria-hidden="true"></div>
+    <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Aviso de cookies">
+      <h3><span aria-hidden="true">🍪</span> uns biscoitinhos?</h3>
+      <p>Esse site usa cookies do Google Analytics pra entender como as pessoas usam o cardápio (anonimamente). Nada de anúncios. <a href="#" id="cookieDetails">Saiba mais</a></p>
+      <div class="cookie-actions">
+        <button class="cookie-btn" id="cookieReject">Recusar</button>
+        <button class="cookie-btn primary" id="cookieAccept">Aceitar</button>
+      </div>
     </div>
-  </div>
 
-  <!-- Cards rendered by JS -->
-  <div id="menu"></div>
-
-  <div class="footer">
-    <p style="margin-bottom: 28px; color: rgba(255,255,255,0.6); font-family: 'Shantell Sans', cursive; font-weight: 400; font-style: normal; font-size: 15px; letter-spacing: 0.2px; font-variation-settings: 'BNCE' 100, 'INFM' 100; line-height: 1.8;">não existe certo ou errado.<br>o papel aceita tudo.</p>
-    <div style="width: 40px; height: 1px; background: rgba(255,255,255,0.1); margin: 0 auto 28px;"></div>
-    <p style="color: rgba(255,255,255,0.35); margin-bottom: 20px;">feito com carinho por miguel 🌈</p>
-
-    <!-- Logo inline em laranja -->
-    <div style="margin-bottom: 20px;">
-      <a href="https://miguelcela.com" target="_blank" rel="noopener" style="display: inline-block; opacity: 0.85; transition: opacity .2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 854.72 113.11" style="height: 32px; width: auto; fill: #ff3506;" role="img" aria-labelledby="logo-title">
-          <title id="logo-title">marca - miguel cela</title>
-          <path d="M67.62,38.78L23.34,111.31H0L51.35,27.53h19.75v72.17L115.38,27.53h19.75v83.78h-3.47V38.78l-44.29,72.53h-19.75V38.78Z"/>
-          <path d="M156.68,9.7c0,5.27-4.31,9.58-9.58,9.58s-9.58-4.31-9.58-9.58,4.31-9.7,9.58-9.7,9.58,4.31,9.58,9.7ZM148.78,27.53v83.78h-3.47V27.53h3.47Z"/>
-          <path d="M200.48,92.16h6.46c14.24,0,38.3-5.75,40.46-19.99h-40.1v-3.47h43.57v42.61h-3.47v-24.78c-6.7,15.56-22.74,26.57-40.81,26.57h-5.63c-23.94,0-44.29-18.55-44.29-43.81s20.23-43.45,44.29-43.45h5.63c19.99,0,38.42,13.88,43.09,33.27l-5.51,1.08c-6.46-7.9-20.71-13.41-37.22-13.41h-6.46c-22.26,0-40.69,10.17-40.69,22.74s18.43,22.62,40.69,22.62Z"/>
-          <path d="M293.37,92.04c19.87,0,35.55-11.13,35.55-24.18V27.53h3.47v40.1c0,21.18-14.24,45.36-38.9,45.36h-.12c-25.25,0-38.9-24.9-38.9-45.36V27.53h3.47v40.34c0,12.93,15.68,24.18,35.43,24.18Z"/>
-          <path d="M409.59,90.37v20.95h-71.21V27.53h71.21v20.95h-67.98v19.27h58.17v3.47h-58.17v19.15h67.98Z"/>
-          <path d="M415.93,27.53h3.47v62.84h62.12v20.95h-65.59V27.53Z"/>
-          <path d="M556.33,25.85h4.55c21.66,0,38.9,13.88,43.57,33.27l-5.51,1.08c-6.46-7.9-20.71-13.41-37.1-13.41h-6.46c-22.26,0-40.81,10.17-40.81,22.74s18.55,22.62,40.81,22.62h6.46c16.4,0,30.64-5.51,37.1-13.41l5.51,1.08c-4.67,19.03-21.42,33.27-43.57,33.27h-4.55c-25.85,0-44.88-19.63-44.88-43.57s18.91-43.69,44.88-43.69Z"/>
-          <path d="M680.45,90.37v20.95h-71.22V27.53h71.22v20.95h-67.98v19.27h58.17v3.47h-58.17v19.15h67.98Z"/>
-          <path d="M686.8,27.53h3.47v62.84h62.12v20.95h-65.59V27.53Z"/>
-          <path d="M815.47,27.53l39.26,83.78h-3.83l-14-29.92h-47.52l-14.36,29.92h-22.02l40.46-83.78h22.02ZM791.05,77.92h44.17l-21.78-46.32-22.38,46.32Z"/>
-        </svg>
-      </a>
+    <!-- COOKIE MODAL -->
+    <div class="cookie-modal" id="cookieModal" role="dialog" aria-modal="true" aria-labelledby="cookieModalTitle">
+      <div class="cookie-modal-inner">
+        <h3 id="cookieModalTitle">Sobre os cookies</h3>
+        <p>Esse site usa apenas cookies analíticos do Google Analytics 4, com IP anonimizado, pra entender de forma agregada como o cardápio está sendo usado.</p>
+        <p><b>O que é coletado:</b></p>
+        <ul>
+          <li><b>Página visitada</b> e tempo de permanência</li>
+          <li><b>Cliques no botão sortear</b> (qual seção, qual atividade)</li>
+          <li><b>Atividades marcadas como feitas</b></li>
+          <li><b>Cliques em links</b> (Instagram, site)</li>
+          <li>Tipo de dispositivo e região (cidade/país), sem identificação pessoal</li>
+        </ul>
+        <p><b>O que <u>não</u> é coletado:</b> nome, e-mail, IP completo, conteúdo do que você escreve nas atividades. Nada é vendido ou compartilhado pra publicidade.</p>
+        <p>Você pode mudar de ideia a qualquer momento clicando em “Preferências de cookies” no rodapé.</p>
+        <div class="cookie-actions">
+          <button class="cookie-btn primary" id="cookieModalClose">Entendi</button>
+        </div>
+      </div>
     </div>
-
-    <p style="color: rgba(255,255,255,0.25); margin-bottom: 10px; font-style: normal; font-size: 13px;">quer mais ideias pra cuidar de si?</p>
-    <p style="font-style: normal; font-size: 13px;">
-      <a href="https://miguelcela.com" target="_blank" rel="noopener"
-         style="color: #ff3506; text-decoration: none; letter-spacing: 0.5px; border-bottom: 1px solid rgba(255,53,6,0.3); padding-bottom: 1px;">miguelcela.com</a>
-      <span style="color: rgba(255,255,255,0.2); margin: 0 10px;">✧</span>
-      <a href="https://www.instagram.com/miguelcela" target="_blank" rel="noopener"
-         style="color: #ff3506; text-decoration: none; letter-spacing: 0.5px; border-bottom: 1px solid rgba(255,53,6,0.3); padding-bottom: 1px;">@miguelcela</a>
-    </p>
-  </div>
-</div>
+  </main>
 
 <script>
-const sections = [
-  {
-    key: "aperitivos",
-    label: "Aperitivos", time: "5 min", emoji: "⚡", accent: "#ff3506",
-    description: "Movimento rápido para acordar o cérebro",
-    items: [
-      { name: "Salto no escuro",     desc: "Abra um livro aleatório, leia 1 parágrafo e escreva 1 frase de reação.", tag: "leitura relâmpago" },
-      { name: "Estica e foca",       desc: "10 alongamentos guiados mentalmente: pescoço, ombros, costas, quadril. Sinta cada músculo.", tag: "corpo ativo" },
-      { name: "Câmera na janela",    desc: "Fotografe 3 coisas pela janela com perspectivas que você nunca tentou antes.", tag: "olhar novo" },
-      { name: "Playlist surpresa",   desc: "Coloque shuffle numa playlist que você nunca ouviu. Dance pelos primeiros 90 segundos, sem cerimônia.", tag: "movimento livre" },
-      { name: "Equação do dia",      desc: "Resolva 3 puzzles de lógica no Lumosity ou no papel. Cronometra e tenta bater o tempo.", tag: "raciocínio rápido" },
-      { name: "Chuva de palavras",   desc: "Escolha uma cor. Em 3 minutos, escreva todas as palavras que ela evoca. Sem censura.", tag: "associação livre" },
-    ],
-  },
-  {
-    key: "pratos",
-    label: "Pratos Principais", time: "20 min", emoji: "🔥", accent: "#cc1344",
-    description: "Trabalho profundo com foco total",
-    items: [
-      { name: "Pomodoro de escrita",   desc: "Escreva sem parar por 20 minutos sobre qualquer tema. Nada de editar — só vazar.", tag: "fluxo contínuo" },
-      { name: "Problema do dia",       desc: "Escolha um desafio do trabalho. Destrinche em partes menores, estime 3 soluções e escolha uma para testar.", tag: "resolução profunda" },
-      { name: "Pesquisa de toca",      desc: "Escolha um tema que te intriga. Abra 5 abas, leia todas, e monte 1 mapa mental com o que aprendeu.", tag: "aprendizagem ativa" },
-      { name: "Carta para o futuro",   desc: "Escreva para você daqui 5 anos. O que está construindo? O que teme? O que deseja? Sem filtro.", tag: "reflexão profunda" },
-      { name: "Skill sprint",          desc: "Dedique 20 minutos ao aprendizado de uma habilidade técnica: código, idioma, instrumento. Um módulo por vez.", tag: "aprendizado técnico" },
-      { name: "Debate com você mesmo", desc: "Escolha uma opinião que você tem. Escreva o melhor argumento contrário que conseguir. Muda seu ponto de vista?", tag: "pensamento crítico" },
-    ],
-  },
-  {
-    key: "desenho",
-    label: "Desenho", time: "15 min", emoji: "✏️", accent: "#4d6eff",
-    description: "Expressão visual sem julgamento",
-    items: [
-      { name: "Retrato de memória",    desc: "Desenhe o rosto de alguém que você ama sem olhar para foto nenhuma. Só o que a memória guarda.", tag: "memória visual" },
-      { name: "Mão cega",              desc: "Escolha um objeto na sua frente. Desenhe-o sem tirar o lápis do papel e sem olhar para o papel.", tag: "observação pura" },
-      { name: "Mapa do bairro",        desc: "Desenhe de memória o mapa do bairro onde você cresceu. Ruas, casas, atalhos que só você conhecia.", tag: "cartografia afetiva" },
-      { name: "Anatomia de planta",    desc: "Pegue uma folha ou flor. Desenhe em detalhe como se fosse um caderno científico do século XIX.", tag: "observação científica" },
-      { name: "Cena em 5 linhas",      desc: "Descreva mentalmente uma cena do dia. Agora tente representá-la usando no máximo 5 linhas.", tag: "síntese visual" },
-      { name: "Autorretrato às cegas", desc: "Olhe no espelho por 30 segundos. Feche os olhos. Desenhe o que ficou.", tag: "percepção de si" },
-    ],
-  },
-  {
-    key: "escrita",
-    label: "Escrita", time: "15 min", emoji: "🖊️", accent: "#ee7a77",
-    description: "Formas curtas para soltar o que está dentro",
-    items: [
-      { name: "Haiku do agora",       desc: "Olhe ao redor. Escolha um detalhe insignificante — uma sombra, um barulho, o cheiro do ar. Escreva um haiku (5-7-5 sílabas) só sobre isso.", tag: "haiku" },
-      { name: "Crônica de 5 minutos", desc: "Escolha um momento banal de hoje — acordar, tomar café, cruzar com alguém. Escreva como se fosse a cena mais importante do dia.", tag: "crônica" },
-      { name: "Poema sem título",     desc: "Abra o primeiro objeto que você ver. Escreva um poema de 6 a 10 linhas como se esse objeto tivesse voz e quisesse te dizer alguma coisa.", tag: "poesia" },
-      { name: "Parágrafo único",      desc: "Escolha uma emoção que você sentiu essa semana mas não nomeou ainda. Escreva exatamente um parágrafo sobre ela. Sem introdução, sem conclusão.", tag: "parágrafo" },
-      { name: "Carta sem destinatário", desc: "Escreva uma carta que começa com 'Eu nunca te disse que...'. Não precisa enviar. Não precisa nem terminar.", tag: "carta" },
-      { name: "Micro-conto",          desc: "Escreva uma história completa em no máximo 6 linhas. Precisa ter início, virada e um final que surpreenda até você.", tag: "ficção" },
-    ],
-  },
-  {
-    key: "diario",
-    label: "Diário", time: "10 min", emoji: "📓", accent: "#ffc900",
-    description: "Presença, descarga e escuta de si",
-    items: [
-      { name: "Descarregamento livre",  desc: "A mente está cheia? Escreva tudo que está circulando sem parar, sem ponto, sem lógica. Só esvaziar. Quando parar de sair, pare.", tag: "brain dump" },
-      { name: "Pergunta da semana",     desc: "O que eu estou evitando sentir essa semana? Escreva por 10 minutos sem levantar a caneta do papel.", tag: "tema semanal" },
-      { name: "Três verdades de hoje",  desc: "Escreva três frases que começam com 'Hoje eu percebi que...'. Podem ser pequenas, estranhas ou óbvias. Vale tudo.", tag: "percepção" },
-      { name: "O que o corpo diz",      desc: "Feche os olhos por 30 segundos. Como está seu corpo agora — peso, tensão, leveza, formigamento? Escreva sem analisar.", tag: "escuta corporal" },
-      { name: "Gratidão específica",    desc: "Não 'sou grato pela saúde'. Escreva sobre um momento concreto de hoje, por menor que seja, que você não quer esquecer.", tag: "gratidão" },
-      { name: "Conversa com ontem",     desc: "O que a versão de você de ontem precisava ouvir que só a de hoje sabe dizer? Escreva essa resposta.", tag: "autocompaixão" },
-    ],
-  },
-  {
-    key: "acompanhamentos",
-    label: "Acompanhamentos", time: "10 min", emoji: "🎨", accent: "#00a86b",
-    description: "Brincadeira criativa sem objetivo",
-    items: [
-      { name: "Doodle sem tema",     desc: "Papel em branco. Caneta. Comece com uma linha e veja onde ela vai. Proibido planejar.", tag: "desenho livre" },
-      { name: "Remix de receita",    desc: "Pegue uma receita simples que você conhece e substitua 2 ingredientes por coisas que tiver em casa.", tag: "criatividade culinária" },
-      { name: "Haiku do momento",    desc: "Observe o ambiente agora. Escreva um haiku (5-7-5 sílabas) sobre o que está vendo ou sentindo.", tag: "poesia instantânea" },
-      { name: "Jogo de personagem",  desc: "Crie um personagem de uma frase: nome, profissão bizarra, e maior medo. Depois, escreva seu monólogo interno.", tag: "ficção rápida" },
-      { name: "Arranjo improvisado", desc: "Pegue 5 objetos aleatórios da mesa. Monte uma composição visual e fotografe como se fosse arte.", tag: "arte acidental" },
-      { name: "Playlist da cena",    desc: "Escolha uma memória vívida. Monte uma playlist de 5 músicas que seriam a trilha sonora dessa cena.", tag: "memória sensorial" },
-    ],
-  },
-];
+  const SECTIONS = [
+    {
+      id: 'aperitivos',
+      name: 'Aperitivos',
+      time: '5 min',
+      icon: '⚡',
+      color: '#ff3506',
+      desc: 'Movimento rápido para acordar o cérebro',
+      items: [
+        { name: 'Salto no escuro',      tag: 'leitura relâmpago',   desc: 'Abra um livro aleatório, leia 1 parágrafo e escreva 1 frase de reação.' },
+        { name: 'Estica e foca',        tag: 'corpo ativo',         desc: '10 alongamentos guiados mentalmente: pescoço, ombros, costas, quadril. Sinta cada músculo.' },
+        { name: 'Câmera na janela',     tag: 'olhar novo',          desc: 'Fotografe 3 coisas pela janela com perspectivas que você nunca tentou antes.' },
+        { name: 'Playlist surpresa',    tag: 'movimento livre',     desc: 'Coloque shuffle numa playlist que você nunca ouviu. Dance pelos primeiros 90 segundos, sem cerimônia.' },
+        { name: 'Equação do dia',       tag: 'raciocínio rápido',   desc: 'Resolva 3 puzzles de lógica no Lumosity ou no papel. Cronometra e tenta bater o tempo.' },
+        { name: 'Chuva de palavras',    tag: 'associação livre',    desc: 'Escolha uma cor. Em 3 minutos, escreva todas as palavras que ela evoca. Sem censura.' },
+      ],
+    },
+    {
+      id: 'pratos',
+      name: 'Pratos Principais',
+      time: '20 min',
+      icon: '🔥',
+      color: '#cc1344',
+      desc: 'Trabalho profundo com foco total',
+      items: [
+        { name: 'Pomodoro de escrita',  tag: 'fluxo contínuo',      desc: 'Escreva sem parar por 20 minutos sobre qualquer tema. Nada de editar — só vazar.' },
+        { name: 'Problema do dia',      tag: 'resolução profunda',  desc: 'Escolha um desafio do trabalho. Destrinche em partes menores, estime 3 soluções e escolha uma para testar.' },
+        { name: 'Pesquisa de toca',     tag: 'aprendizagem ativa',  desc: 'Escolha um tema que te intriga. Abra 5 abas, leia todas, e monte 1 mapa mental com o que aprendeu.' },
+        { name: 'Carta para o futuro',  tag: 'reflexão profunda',   desc: 'Escreva para você daqui 5 anos. O que está construindo? O que teme? O que deseja? Sem filtro.' },
+        { name: 'Skill sprint',         tag: 'aprendizado técnico', desc: 'Dedique 20 minutos ao aprendizado de uma habilidade técnica: código, idioma, instrumento. Um módulo por vez.' },
+        { name: 'Debate com você mesmo',tag: 'pensamento crítico',  desc: 'Escolha uma opinião que você tem. Escreva o melhor argumento contrário que conseguir. Muda seu ponto de vista?' },
+      ],
+    },
+    {
+      id: 'desenho',
+      name: 'Desenho',
+      time: '15 min',
+      icon: '✏️',
+      color: '#4d6eff',
+      desc: 'Expressão visual sem julgamento',
+      items: [
+        { name: 'Retrato de memória',    tag: 'memória visual',        desc: 'Desenhe o rosto de alguém que você ama sem olhar para foto nenhuma. Só o que a memória guarda.' },
+        { name: 'Mão cega',              tag: 'observação pura',       desc: 'Escolha um objeto na sua frente. Desenhe-o sem tirar o lápis do papel e sem olhar para o papel.' },
+        { name: 'Mapa do bairro',        tag: 'cartografia afetiva',   desc: 'Desenhe de memória o mapa do bairro onde você cresceu. Ruas, casas, atalhos que só você conhecia.' },
+        { name: 'Anatomia de planta',    tag: 'observação científica', desc: 'Pegue uma folha ou flor. Desenhe em detalhe como se fosse um caderno científico do século XIX.' },
+        { name: 'Cena em 5 linhas',      tag: 'síntese visual',        desc: 'Descreva mentalmente uma cena do dia. Agora tente representá-la usando no máximo 5 linhas.' },
+        { name: 'Autorretrato às cegas', tag: 'percepção de si',       desc: 'Olhe no espelho por 30 segundos. Feche os olhos. Desenhe o que ficou.' },
+      ],
+    },
+    {
+      id: 'escrita',
+      name: 'Escrita',
+      time: '15 min',
+      icon: '🖊️',
+      color: '#ee7a77',
+      desc: 'Formas curtas para soltar o que está dentro',
+      items: [
+        { name: 'Haiku do agora',         tag: 'haiku',     desc: 'Olhe ao redor. Escolha um detalhe insignificante — uma sombra, um barulho, o cheiro do ar. Escreva um haiku (5-7-5 sílabas) só sobre isso.' },
+        { name: 'Crônica de 5 minutos',   tag: 'crônica',   desc: 'Escolha um momento banal de hoje — acordar, tomar café, cruzar com alguém. Escreva como se fosse a cena mais importante do dia.' },
+        { name: 'Poema sem título',       tag: 'poesia',    desc: 'Abra o primeiro objeto que você ver. Escreva um poema de 6 a 10 linhas como se esse objeto tivesse voz e quisesse te dizer alguma coisa.' },
+        { name: 'Parágrafo único',        tag: 'parágrafo', desc: 'Escolha uma emoção que você sentiu essa semana mas não nomeou ainda. Escreva exatamente um parágrafo sobre ela. Sem introdução, sem conclusão.' },
+        { name: 'Carta sem destinatário', tag: 'carta',     desc: 'Escreva uma carta que começa com "Eu nunca te disse que...". Não precisa enviar. Não precisa nem terminar.' },
+        { name: 'Micro-conto',            tag: 'ficção',    desc: 'Escreva uma história completa em no máximo 6 linhas. Precisa ter início, virada e um final que surpreenda até você.' },
+      ],
+    },
+    {
+      id: 'diario',
+      name: 'Diário',
+      time: '10 min',
+      icon: '📓',
+      color: '#ffc900',
+      desc: 'Presença, descarga e escuta de si',
+      items: [
+        { name: 'Descarregamento livre',  tag: 'brain dump',       desc: 'A mente está cheia? Escreva tudo que está circulando sem parar, sem ponto, sem lógica. Só esvaziar. Quando parar de sair, pare.' },
+        { name: 'Pergunta da semana',     tag: 'tema semanal',     desc: 'O que eu estou evitando sentir essa semana? Escreva por 10 minutos sem levantar a caneta do papel.' },
+        { name: 'Três verdades de hoje',  tag: 'percepção',        desc: 'Escreva três frases que começam com "Hoje eu percebi que...". Podem ser pequenas, estranhas ou óbvias. Vale tudo.' },
+        { name: 'O que o corpo diz',      tag: 'escuta corporal',  desc: 'Feche os olhos por 30 segundos. Como está seu corpo agora — peso, tensão, leveza, formigamento? Escreva sem analisar.' },
+        { name: 'Gratidão específica',    tag: 'gratidão',         desc: 'Não "sou grato pela saúde". Escreva sobre um momento concreto de hoje, por menor que seja, que você não quer esquecer.' },
+        { name: 'Conversa com ontem',     tag: 'autocompaixão',    desc: 'O que a versão de você de ontem precisava ouvir que só a de hoje sabe dizer? Escreva essa resposta.' },
+      ],
+    },
+    {
+      id: 'acompanhamentos',
+      name: 'Acompanhamentos',
+      time: '10 min',
+      icon: '🎨',
+      color: '#00a86b',
+      desc: 'Brincadeira criativa sem objetivo',
+      items: [
+        { name: 'Doodle sem tema',        tag: 'desenho livre',          desc: 'Papel em branco. Caneta. Comece com uma linha e veja onde ela vai. Proibido planejar.' },
+        { name: 'Remix de receita',       tag: 'criatividade culinária', desc: 'Pegue uma receita simples que você conhece e substitua 2 ingredientes por coisas que tiver em casa.' },
+        { name: 'Haiku do momento',       tag: 'poesia instantânea',     desc: 'Observe o ambiente agora. Escreva um haiku (5-7-5 sílabas) sobre o que está vendo ou sentindo.' },
+        { name: 'Jogo de personagem',     tag: 'ficção rápida',          desc: 'Crie um personagem de uma frase: nome, profissão bizarra, e maior medo. Depois, escreva seu monólogo interno.' },
+        { name: 'Arranjo improvisado',    tag: 'arte acidental',         desc: 'Pegue 5 objetos aleatórios da mesa. Monte uma composição visual e fotografe como se fosse arte.' },
+        { name: 'Playlist da cena',       tag: 'memória sensorial',      desc: 'Escolha uma memória vívida. Monte uma playlist de 5 músicas que seriam a trilha sonora dessa cena.' },
+      ],
+    },
+  ];
 
-const state = {};
-sections.forEach(s => { state[s.key] = { revealed: false, item: null, done: false }; });
+  // ============================================================
+  // COOKIE BANNER (LGPD + Consent Mode)
+  // ============================================================
+  (function() {
+    var banner = document.getElementById('cookieBanner');
+    var backdrop = document.getElementById('cookieBackdrop');
+    var modal = document.getElementById('cookieModal');
+    var btnAccept = document.getElementById('cookieAccept');
+    var btnReject = document.getElementById('cookieReject');
+    var btnDetails = document.getElementById('cookieDetails');
+    var btnModalClose = document.getElementById('cookieModalClose');
+    var btnReopen = document.getElementById('cookieReopen');
 
-let totalDone = 0;
+    function showBanner() { banner.classList.add('show'); backdrop.classList.add('show'); }
+    function hideBanner() { banner.classList.remove('show'); backdrop.classList.remove('show'); }
+    function showModal() { modal.classList.add('show'); }
+    function hideModal() { modal.classList.remove('show'); }
 
-function hex(color, alpha) {
-  // returns rgba string from hex + 0-1 alpha, used inline
-  const r = parseInt(color.slice(1,3),16);
-  const g = parseInt(color.slice(3,5),16);
-  const b = parseInt(color.slice(5,7),16);
-  return `rgba(${r},${g},${b},${alpha})`;
-}
-
-function render() {
-  const container = document.getElementById("menu");
-  container.innerHTML = "";
-
-  sections.forEach(section => {
-    const s = state[section.key];
-    const accent = section.accent;
-
-    const card = document.createElement("div");
-    card.className = "card";
-
-    // Header
-    const header = document.createElement("div");
-    header.className = "card-header";
-    header.style.background = `linear-gradient(90deg, ${hex(accent,0.1)}, transparent)`;
-
-    const meta = document.createElement("div");
-    meta.className = "card-meta";
-
-    const iconBox = document.createElement("div");
-    iconBox.className = "icon-box";
-    iconBox.style.background = hex(accent, 0.13);
-    iconBox.style.border = `1px solid ${hex(accent, 0.27)}`;
-    iconBox.textContent = section.emoji;
-
-    const textGroup = document.createElement("div");
-
-    const titleRow = document.createElement("div");
-    titleRow.className = "section-title-row";
-
-    const nameEl = document.createElement("span");
-    nameEl.className = "section-name";
-    nameEl.textContent = section.label;
-
-    const timePill = document.createElement("span");
-    timePill.className = "time-pill";
-    timePill.style.background = hex(accent, 0.13);
-    timePill.style.border = `1px solid ${hex(accent, 0.33)}`;
-    timePill.style.color = accent;
-    timePill.textContent = section.time;
-
-    titleRow.appendChild(nameEl);
-    titleRow.appendChild(timePill);
-
-    const descEl = document.createElement("p");
-    descEl.className = "section-desc";
-    descEl.textContent = section.description;
-
-    textGroup.appendChild(titleRow);
-    textGroup.appendChild(descEl);
-    meta.appendChild(iconBox);
-    meta.appendChild(textGroup);
-
-    const btn = document.createElement("button");
-    btn.className = "btn-roll";
-    btn.style.background = `linear-gradient(135deg, ${accent}, ${hex(accent, 0.67)})`;
-    btn.textContent = "SORTEAR";
-    btn.addEventListener("click", () => roll(section.key));
-
-    header.appendChild(meta);
-    header.appendChild(btn);
-    card.appendChild(header);
-
-    // Body
-    if (s.revealed && s.item) {
-      const area = document.createElement("div");
-      area.className = "revealed-area";
-
-      const inner = document.createElement("div");
-      inner.className = "revealed-inner";
-
-      const content = document.createElement("div");
-      content.style.flex = "1";
-
-      const itemTitleRow = document.createElement("div");
-      itemTitleRow.className = "item-title-row";
-
-      const itemName = document.createElement("span");
-      itemName.className = "item-name";
-      itemName.textContent = s.item.name;
-
-      const tagPill = document.createElement("span");
-      tagPill.className = "tag-pill";
-      tagPill.style.background = hex(accent, 0.1);
-      tagPill.style.color = accent;
-      tagPill.textContent = s.item.tag;
-
-      itemTitleRow.appendChild(itemName);
-      itemTitleRow.appendChild(tagPill);
-
-      const itemDesc = document.createElement("p");
-      itemDesc.className = "item-desc";
-      itemDesc.textContent = s.item.desc;
-
-      content.appendChild(itemTitleRow);
-      content.appendChild(itemDesc);
-
-      const doneBtn = document.createElement("button");
-      doneBtn.className = "btn-done" + (s.done ? " checked" : "");
-      doneBtn.textContent = "✓";
-      doneBtn.title = "Marcar como feito";
-      doneBtn.addEventListener("click", () => markDone(section.key));
-
-      inner.appendChild(content);
-      inner.appendChild(doneBtn);
-      area.appendChild(inner);
-      card.appendChild(area);
-    } else {
-      const idle = document.createElement("div");
-      idle.className = "idle-row";
-      section.items.forEach(() => {
-        const dot = document.createElement("div");
-        dot.className = "dot";
-        dot.style.background = hex(accent, 0.2);
-        dot.style.border = `1px solid ${hex(accent, 0.33)}`;
-        idle.appendChild(dot);
-      });
-      const label = document.createElement("span");
-      label.className = "idle-label";
-      label.textContent = `${section.items.length} opções disponíveis`;
-      idle.appendChild(label);
-      card.appendChild(idle);
+    function setConsent(value) {
+      try { localStorage.setItem('cdd_consent', value); } catch(e) {}
+      if (typeof gtag === 'function') {
+        gtag('consent', 'update', {
+          'analytics_storage': value === 'granted' ? 'granted' : 'denied'
+        });
+        if (value === 'granted') {
+          gtag('event', 'consent_aceito');
+        }
+      }
     }
 
-    container.appendChild(card);
+    var saved = null;
+    try { saved = localStorage.getItem('cdd_consent'); } catch(e) {}
+    if (!saved) {
+      setTimeout(showBanner, 700);
+    }
+
+    btnAccept.addEventListener('click', function() {
+      setConsent('granted');
+      hideBanner();
+    });
+    btnReject.addEventListener('click', function() {
+      setConsent('denied');
+      hideBanner();
+    });
+    btnDetails.addEventListener('click', function(e) {
+      e.preventDefault();
+      showModal();
+    });
+    btnModalClose.addEventListener('click', hideModal);
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) hideModal();
+    });
+    btnReopen.addEventListener('click', function() {
+      try { localStorage.removeItem('cdd_consent'); } catch(e) {}
+      showBanner();
+    });
+  })();
+
+  // GA: cliques no rodapé (links e logo)
+  document.querySelectorAll('[data-ga-link]').forEach(a => {
+    a.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'clique_rodape', { destino: a.dataset.gaLink, url: a.href });
+      }
+    });
+  });
+  document.querySelector('.foot-logo')?.addEventListener('click', () => {
+    if (typeof gtag === 'function') {
+      gtag('event', 'clique_logo', { destino: 'miguelcela.com' });
+    }
   });
 
-  // Counter
-  const counter = document.getElementById("counter");
-  const counterText = document.getElementById("counter-text");
-  if (totalDone > 0) {
-    counter.classList.add("visible");
-    counterText.textContent = `✓ ${totalDone} prato${totalDone > 1 ? "s" : ""} concluído${totalDone > 1 ? "s" : ""} hoje`;
-  } else {
-    counter.classList.remove("visible");
-  }
-}
+  const grid = document.getElementById('grid');
+  const state = {}; // id -> { done: Set<number>, lastIdx: number|null }
 
-function roll(key) {
-  const section = sections.find(s => s.key === key);
-  const items = section.items;
-  state[key].item = items[Math.floor(Math.random() * items.length)];
-  state[key].revealed = true;
-  state[key].done = false;
-  render();
-}
+  SECTIONS.forEach(section => {
+    state[section.id] = { done: new Set(), lastIdx: null };
 
-function markDone(key) {
-  state[key].done = true;
-  totalDone++;
-  render();
-  setTimeout(() => {
-    state[key].revealed = false;
-    state[key].done = false;
-    render();
-  }, 1800);
-}
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.style.setProperty('--c', section.color);
+    card.innerHTML = `
+      <div class="card-head">
+        <div class="head-top">
+          <div class="head-id">
+            <div class="icon" aria-hidden="true">${section.icon}</div>
+            <div class="head-text">
+              <h2>${section.name}</h2>
+              <span class="pill">${section.time}</span>
+            </div>
+          </div>
+          <div class="counter" data-counter><b>0</b>/6 feitos</div>
+        </div>
+        <p class="desc">${section.desc}</p>
+      </div>
+      <div class="card-body">
+        <div class="slot" data-slot>
+          <div class="idle">
+            <div class="dots" aria-hidden="true">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <span class="idle-label">6 opções disponíveis</span>
+          </div>
+        </div>
+        <button class="sortear" data-sortear aria-label="Sortear atividade de ${section.name}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 3h5v5"/><path d="M21 3l-7 7"/><path d="M8 21H3v-5"/><path d="M3 21l7-7"/><path d="M21 16v5h-5"/><path d="M21 21l-7-7"/><path d="M3 8V3h5"/><path d="M3 3l7 7"/>
+          </svg>
+          Sortear
+        </button>
+      </div>
+    `;
 
-render();
-</script>
-<!-- ── BANNER DE COOKIES ── -->
-<div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Aviso de cookies" style="
-  display: none;
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  z-index: 9999;
-  padding: 20px;
-  background: rgba(14,11,9,0.97);
-  border-top: 1px solid rgba(255,255,255,0.08);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  font-family: 'degular', sans-serif;
-">
-  <div style="max-width: 760px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
-    <p style="color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.6; flex: 1; min-width: 240px; margin: 0;">
-      este site usa cookies do <strong style="color: rgba(255,255,255,0.85); font-weight: 600;">Google Analytics</strong> para entender como as pessoas usam o cardápio. nenhum dado pessoal é coletado.
-      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener"
-         style="color: #ff3506; text-decoration: none; border-bottom: 1px solid rgba(255,53,6,0.3); white-space: nowrap;">política de privacidade</a>
-    </p>
-    <div style="display: flex; gap: 10px; flex-shrink: 0;">
-      <button id="cookie-decline" style="
-        background: transparent;
-        border: 1px solid rgba(255,255,255,0.15);
-        color: rgba(255,255,255,0.45);
-        border-radius: 10px;
-        padding: 8px 18px;
-        font-family: 'degular', sans-serif;
-        font-size: 13px;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        cursor: pointer;
-        transition: all .15s ease;
-      ">recusar</button>
-      <button id="cookie-accept" style="
-        background: #ff3506;
-        border: none;
-        color: #fff;
-        border-radius: 10px;
-        padding: 8px 20px;
-        font-family: 'degular', sans-serif;
-        font-size: 13px;
-        font-weight: 700;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: opacity .15s ease;
-      ">aceitar</button>
-    </div>
-  </div>
-</div>
+    const slot = card.querySelector('[data-slot]');
+    const btn = card.querySelector('[data-sortear]');
+    const counterEl = card.querySelector('[data-counter]');
 
-<script>
-(function() {
-  const banner  = document.getElementById('cookie-banner');
-  const consent = localStorage.getItem('cookie-consent');
+    function updateCounter() {
+      const n = state[section.id].done.size;
+      counterEl.querySelector('b').textContent = n;
+      if (n > 0) counterEl.classList.add('on');
+    }
 
-  // Se já decidiu antes, aplicar e não mostrar o banner
-  if (consent === 'granted') {
-    gtag('consent', 'update', { analytics_storage: 'granted', ad_storage: 'denied' });
-  } else if (consent === 'denied') {
-    // nada — já está negado por padrão
-  } else {
-    // Primeira visita: mostrar banner
-    banner.style.display = 'block';
-  }
+    function renderItem(idx) {
+      const it = section.items[idx];
+      const isDone = state[section.id].done.has(idx);
+      slot.innerHTML = `
+        <div class="revealed">
+          <div class="content">
+            <h3 class="rev-name">${it.name}</h3>
+            <span class="rev-tag">${it.tag}</span>
+            <p class="rev-desc">${it.desc}</p>
+          </div>
+          <button class="check ${isDone ? 'done' : ''}" data-check aria-label="${isDone ? 'Desmarcar' : 'Marcar'} como feito" aria-pressed="${isDone}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </button>
+        </div>
+      `;
+      slot.querySelector('[data-check]').addEventListener('click', () => {
+        const set = state[section.id].done;
+        const willBeDone = !set.has(idx);
+        if (willBeDone) { set.add(idx); } else { set.delete(idx); }
+        updateCounter();
+        renderItem(idx);
 
-  document.getElementById('cookie-accept').addEventListener('click', function() {
-    localStorage.setItem('cookie-consent', 'granted');
-    gtag('consent', 'update', { analytics_storage: 'granted', ad_storage: 'denied' });
-    banner.style.display = 'none';
+        // GA: marcar/desmarcar como feito
+        if (typeof gtag === 'function') {
+          gtag('event', willBeDone ? 'atividade_concluida' : 'atividade_desmarcada', {
+            secao_id: section.id,
+            secao_nome: section.name,
+            atividade_nome: it.name,
+            atividade_tag: it.tag,
+            atividade_indice: idx,
+            total_concluidas_secao: set.size
+          });
+        }
+      });
+    }
+
+    btn.addEventListener('click', () => {
+      const n = section.items.length;
+      let idx = Math.floor(Math.random() * n);
+      if (state[section.id].lastIdx !== null && n > 1) {
+        while (idx === state[section.id].lastIdx) idx = Math.floor(Math.random() * n);
+      }
+      state[section.id].lastIdx = idx;
+      renderItem(idx);
+
+      // GA: sorteio
+      if (typeof gtag === 'function') {
+        gtag('event', 'sortear_atividade', {
+          secao_id: section.id,
+          secao_nome: section.name,
+          atividade_nome: section.items[idx].name,
+          atividade_tag: section.items[idx].tag,
+          atividade_indice: idx
+        });
+      }
+    });
+
+    grid.appendChild(card);
   });
-
-  document.getElementById('cookie-decline').addEventListener('click', function() {
-    localStorage.setItem('cookie-consent', 'denied');
-    banner.style.display = 'none';
-  });
-
-  // Hover nos botões
-  const btnAccept  = document.getElementById('cookie-accept');
-  const btnDecline = document.getElementById('cookie-decline');
-  btnAccept.addEventListener('mouseover',  () => btnAccept.style.opacity  = '0.85');
-  btnAccept.addEventListener('mouseout',   () => btnAccept.style.opacity  = '1');
-  btnDecline.addEventListener('mouseover', () => { btnDecline.style.borderColor = 'rgba(255,255,255,0.35)'; btnDecline.style.color = 'rgba(255,255,255,0.7)'; });
-  btnDecline.addEventListener('mouseout',  () => { btnDecline.style.borderColor = 'rgba(255,255,255,0.15)'; btnDecline.style.color = 'rgba(255,255,255,0.45)'; });
-})();
 </script>
 </body>
 </html>
