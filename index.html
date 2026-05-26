@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Cardápio de Dopamina</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌈</text></svg>">
 <link rel="stylesheet" href="https://use.typekit.net/rjs6bjw.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@400;700&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap">
@@ -263,6 +264,22 @@
     letter-spacing: 0.3px;
   }
 </style>
+<!-- Google tag (gtag.js) — carrega mas aguarda consentimento -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FKFCQLR88N"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+
+  // Consent mode: negado por padrão até usuário aceitar
+  gtag('consent', 'default', {
+    analytics_storage: 'denied',
+    ad_storage: 'denied',
+    wait_for_update: 500
+  });
+
+  gtag('js', new Date());
+  gtag('config', 'G-FKFCQLR88N', { anonymize_ip: true });
+</script>
 </head>
 <body>
 <div class="wrapper">
@@ -569,6 +586,92 @@ function markDone(key) {
 }
 
 render();
+</script>
+<!-- ── BANNER DE COOKIES ── -->
+<div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Aviso de cookies" style="
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 9999;
+  padding: 20px;
+  background: rgba(14,11,9,0.97);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-family: 'degular', sans-serif;
+">
+  <div style="max-width: 760px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+    <p style="color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.6; flex: 1; min-width: 240px; margin: 0;">
+      este site usa cookies do <strong style="color: rgba(255,255,255,0.85); font-weight: 600;">Google Analytics</strong> para entender como as pessoas usam o cardápio. nenhum dado pessoal é coletado.
+      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener"
+         style="color: #ff3506; text-decoration: none; border-bottom: 1px solid rgba(255,53,6,0.3); white-space: nowrap;">política de privacidade</a>
+    </p>
+    <div style="display: flex; gap: 10px; flex-shrink: 0;">
+      <button id="cookie-decline" style="
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.15);
+        color: rgba(255,255,255,0.45);
+        border-radius: 10px;
+        padding: 8px 18px;
+        font-family: 'degular', sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        transition: all .15s ease;
+      ">recusar</button>
+      <button id="cookie-accept" style="
+        background: #ff3506;
+        border: none;
+        color: #fff;
+        border-radius: 10px;
+        padding: 8px 20px;
+        font-family: 'degular', sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: opacity .15s ease;
+      ">aceitar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const banner  = document.getElementById('cookie-banner');
+  const consent = localStorage.getItem('cookie-consent');
+
+  // Se já decidiu antes, aplicar e não mostrar o banner
+  if (consent === 'granted') {
+    gtag('consent', 'update', { analytics_storage: 'granted', ad_storage: 'denied' });
+  } else if (consent === 'denied') {
+    // nada — já está negado por padrão
+  } else {
+    // Primeira visita: mostrar banner
+    banner.style.display = 'block';
+  }
+
+  document.getElementById('cookie-accept').addEventListener('click', function() {
+    localStorage.setItem('cookie-consent', 'granted');
+    gtag('consent', 'update', { analytics_storage: 'granted', ad_storage: 'denied' });
+    banner.style.display = 'none';
+  });
+
+  document.getElementById('cookie-decline').addEventListener('click', function() {
+    localStorage.setItem('cookie-consent', 'denied');
+    banner.style.display = 'none';
+  });
+
+  // Hover nos botões
+  const btnAccept  = document.getElementById('cookie-accept');
+  const btnDecline = document.getElementById('cookie-decline');
+  btnAccept.addEventListener('mouseover',  () => btnAccept.style.opacity  = '0.85');
+  btnAccept.addEventListener('mouseout',   () => btnAccept.style.opacity  = '1');
+  btnDecline.addEventListener('mouseover', () => { btnDecline.style.borderColor = 'rgba(255,255,255,0.35)'; btnDecline.style.color = 'rgba(255,255,255,0.7)'; });
+  btnDecline.addEventListener('mouseout',  () => { btnDecline.style.borderColor = 'rgba(255,255,255,0.15)'; btnDecline.style.color = 'rgba(255,255,255,0.45)'; });
+})();
 </script>
 </body>
 </html>
