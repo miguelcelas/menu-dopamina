@@ -12,7 +12,7 @@
 
   body {
     min-height: 100vh;
-    background: linear-gradient(145deg, #1a0a2e 0%, #16213e 50%, #0f3460 100%);
+    background: linear-gradient(160deg, #0a0806 0%, #0e0b09 60%, #110d0a 100%);
     font-family: "degular", sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -37,7 +37,7 @@
     font-size: 11px;
     letter-spacing: 4px;
     text-transform: uppercase;
-    color: #A78BFA;
+    color: #ff3506;
   }
 
   h1 {
@@ -50,7 +50,7 @@
   }
 
   .gradient-text {
-    background: linear-gradient(90deg, #F59E0B, #EF4444, #8B5CF6);
+    background: linear-gradient(90deg, #ffc900, #ff3506, #cc1344);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -73,11 +73,11 @@
   }
   .counter.visible { display: flex; }
   .counter-pill {
-    background: rgba(167,139,250,0.15);
-    border: 1px solid rgba(167,139,250,0.3);
+    background: rgba(255,53,6,0.15);
+    border: 1px solid rgba(255,53,6,0.3);
     border-radius: 20px;
     padding: 6px 16px;
-    color: #A78BFA;
+    color: #ff3506;
     font-size: 14px;
   }
 
@@ -242,8 +242,8 @@
     transition: all .2s ease;
   }
   .btn-done.checked {
-    background: #27AE60;
-    border-color: #27AE60;
+    background: #00a86b;
+    border-color: #00a86b;
     color: #fff;
     animation: checkPop .4s cubic-bezier(0.16,1,0.3,1);
   }
@@ -283,14 +283,34 @@
   <div class="footer">
     <p style="margin-bottom: 28px; color: rgba(255,255,255,0.6); font-family: 'Shantell Sans', cursive; font-weight: 400; font-style: normal; font-size: 15px; letter-spacing: 0.2px; font-variation-settings: 'BNCE' 100, 'INFM' 100; line-height: 1.8;">não existe certo ou errado.<br>o papel aceita tudo.</p>
     <div style="width: 40px; height: 1px; background: rgba(255,255,255,0.1); margin: 0 auto 28px;"></div>
-    <p style="color: rgba(255,255,255,0.35); margin-bottom: 8px;">feito com carinho por miguel 🌈</p>
+    <p style="color: rgba(255,255,255,0.35); margin-bottom: 20px;">feito com carinho por miguel 🌈</p>
+
+    <!-- Logo inline em laranja -->
+    <div style="margin-bottom: 20px;">
+      <a href="https://miguelcela.com" target="_blank" rel="noopener" style="display: inline-block; opacity: 0.85; transition: opacity .2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 854.72 113.11" style="height: 32px; width: auto; fill: #ff3506;" role="img" aria-labelledby="logo-title">
+          <title id="logo-title">marca - miguel cela</title>
+          <path d="M67.62,38.78L23.34,111.31H0L51.35,27.53h19.75v72.17L115.38,27.53h19.75v83.78h-3.47V38.78l-44.29,72.53h-19.75V38.78Z"/>
+          <path d="M156.68,9.7c0,5.27-4.31,9.58-9.58,9.58s-9.58-4.31-9.58-9.58,4.31-9.7,9.58-9.7,9.58,4.31,9.58,9.7ZM148.78,27.53v83.78h-3.47V27.53h3.47Z"/>
+          <path d="M200.48,92.16h6.46c14.24,0,38.3-5.75,40.46-19.99h-40.1v-3.47h43.57v42.61h-3.47v-24.78c-6.7,15.56-22.74,26.57-40.81,26.57h-5.63c-23.94,0-44.29-18.55-44.29-43.81s20.23-43.45,44.29-43.45h5.63c19.99,0,38.42,13.88,43.09,33.27l-5.51,1.08c-6.46-7.9-20.71-13.41-37.22-13.41h-6.46c-22.26,0-40.69,10.17-40.69,22.74s18.43,22.62,40.69,22.62Z"/>
+          <path d="M293.37,92.04c19.87,0,35.55-11.13,35.55-24.18V27.53h3.47v40.1c0,21.18-14.24,45.36-38.9,45.36h-.12c-25.25,0-38.9-24.9-38.9-45.36V27.53h3.47v40.34c0,12.93,15.68,24.18,35.43,24.18Z"/>
+          <path d="M409.59,90.37v20.95h-71.21V27.53h71.21v20.95h-67.98v19.27h58.17v3.47h-58.17v19.15h67.98Z"/>
+          <path d="M415.93,27.53h3.47v62.84h62.12v20.95h-65.59V27.53Z"/>
+          <path d="M556.33,25.85h4.55c21.66,0,38.9,13.88,43.57,33.27l-5.51,1.08c-6.46-7.9-20.71-13.41-37.1-13.41h-6.46c-22.26,0-40.81,10.17-40.81,22.74s18.55,22.62,40.81,22.62h6.46c16.4,0,30.64-5.51,37.1-13.41l5.51,1.08c-4.67,19.03-21.42,33.27-43.57,33.27h-4.55c-25.85,0-44.88-19.63-44.88-43.57s18.91-43.69,44.88-43.69Z"/>
+          <path d="M680.45,90.37v20.95h-71.22V27.53h71.22v20.95h-67.98v19.27h58.17v3.47h-58.17v19.15h67.98Z"/>
+          <path d="M686.8,27.53h3.47v62.84h62.12v20.95h-65.59V27.53Z"/>
+          <path d="M815.47,27.53l39.26,83.78h-3.83l-14-29.92h-47.52l-14.36,29.92h-22.02l40.46-83.78h22.02ZM791.05,77.92h44.17l-21.78-46.32-22.38,46.32Z"/>
+        </svg>
+      </a>
+    </div>
+
     <p style="color: rgba(255,255,255,0.25); margin-bottom: 10px; font-style: normal; font-size: 13px;">quer mais ideias pra cuidar de si?</p>
     <p style="font-style: normal; font-size: 13px;">
       <a href="https://miguelcela.com" target="_blank" rel="noopener"
-         style="color: #A78BFA; text-decoration: none; letter-spacing: 0.5px; border-bottom: 1px solid rgba(167,139,250,0.3); padding-bottom: 1px; transition: border-color .2s;">miguelcela.com</a>
+         style="color: #ff3506; text-decoration: none; letter-spacing: 0.5px; border-bottom: 1px solid rgba(255,53,6,0.3); padding-bottom: 1px;">miguelcela.com</a>
       <span style="color: rgba(255,255,255,0.2); margin: 0 10px;">✧</span>
       <a href="https://www.instagram.com/miguelcela" target="_blank" rel="noopener"
-         style="color: #A78BFA; text-decoration: none; letter-spacing: 0.5px; border-bottom: 1px solid rgba(167,139,250,0.3); padding-bottom: 1px; transition: border-color .2s;">@miguelcela</a>
+         style="color: #ff3506; text-decoration: none; letter-spacing: 0.5px; border-bottom: 1px solid rgba(255,53,6,0.3); padding-bottom: 1px;">@miguelcela</a>
     </p>
   </div>
 </div>
@@ -299,7 +319,7 @@
 const sections = [
   {
     key: "aperitivos",
-    label: "Aperitivos", time: "5 min", emoji: "⚡", accent: "#FF6B35",
+    label: "Aperitivos", time: "5 min", emoji: "⚡", accent: "#ff3506",
     description: "Movimento rápido para acordar o cérebro",
     items: [
       { name: "Salto no escuro",     desc: "Abra um livro aleatório, leia 1 parágrafo e escreva 1 frase de reação.", tag: "leitura relâmpago" },
@@ -312,7 +332,7 @@ const sections = [
   },
   {
     key: "pratos",
-    label: "Pratos Principais", time: "20 min", emoji: "🔥", accent: "#C0392B",
+    label: "Pratos Principais", time: "20 min", emoji: "🔥", accent: "#cc1344",
     description: "Trabalho profundo com foco total",
     items: [
       { name: "Pomodoro de escrita",   desc: "Escreva sem parar por 20 minutos sobre qualquer tema. Nada de editar — só vazar.", tag: "fluxo contínuo" },
@@ -325,7 +345,7 @@ const sections = [
   },
   {
     key: "desenho",
-    label: "Desenho", time: "15 min", emoji: "✏️", accent: "#3B82F6",
+    label: "Desenho", time: "15 min", emoji: "✏️", accent: "#4d6eff",
     description: "Expressão visual sem julgamento",
     items: [
       { name: "Retrato de memória",    desc: "Desenhe o rosto de alguém que você ama sem olhar para foto nenhuma. Só o que a memória guarda.", tag: "memória visual" },
@@ -338,7 +358,7 @@ const sections = [
   },
   {
     key: "escrita",
-    label: "Escrita", time: "15 min", emoji: "🖊️", accent: "#E879A0",
+    label: "Escrita", time: "15 min", emoji: "🖊️", accent: "#ee7a77",
     description: "Formas curtas para soltar o que está dentro",
     items: [
       { name: "Haiku do agora",       desc: "Olhe ao redor. Escolha um detalhe insignificante — uma sombra, um barulho, o cheiro do ar. Escreva um haiku (5-7-5 sílabas) só sobre isso.", tag: "haiku" },
@@ -351,7 +371,7 @@ const sections = [
   },
   {
     key: "diario",
-    label: "Diário", time: "10 min", emoji: "📓", accent: "#F0A500",
+    label: "Diário", time: "10 min", emoji: "📓", accent: "#ffc900",
     description: "Presença, descarga e escuta de si",
     items: [
       { name: "Descarregamento livre",  desc: "A mente está cheia? Escreva tudo que está circulando sem parar, sem ponto, sem lógica. Só esvaziar. Quando parar de sair, pare.", tag: "brain dump" },
@@ -364,7 +384,7 @@ const sections = [
   },
   {
     key: "acompanhamentos",
-    label: "Acompanhamentos", time: "10 min", emoji: "🎨", accent: "#27AE60",
+    label: "Acompanhamentos", time: "10 min", emoji: "🎨", accent: "#00a86b",
     description: "Brincadeira criativa sem objetivo",
     items: [
       { name: "Doodle sem tema",     desc: "Papel em branco. Caneta. Comece com uma linha e veja onde ela vai. Proibido planejar.", tag: "desenho livre" },
