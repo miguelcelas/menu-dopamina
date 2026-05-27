@@ -40,7 +40,7 @@
   })();
 </script>
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E" />
+<link rel="icon" type="image/svg+xml" href="assets/rosto-mascote.svg" />
 <link rel="stylesheet" href="https://use.typekit.net/rjs6bjw.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -244,10 +244,9 @@
     min-width: 0;
   }
   .rosto {
-    width: 58px; height: 58px;
+    width: 64px; height: 64px;
     flex-shrink: 0;
-    border-radius: 50%;
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     image-rendering: -webkit-optimize-contrast;
@@ -826,7 +825,7 @@
     <!-- MASCOTE (DVD bounce) -->
     <div class="mascote" id="mascote" aria-hidden="true" title="oi :)">
       <span class="mascote-bubble">oi :)</span>
-      <img src="assets/rosto-09.png" alt="" />
+      <img src="assets/rosto-mascote.svg" alt="" />
     </div>
 
     <!-- COOKIE BANNER -->
@@ -874,7 +873,7 @@
       color: '#ff3506',   // laranja
       colorSoft: 'rgba(255,53,6,0.10)',
       darkTag: true,
-      rosto: 'assets/rosto-18.png',
+      rosto: 'assets/rosto-aperitivos.svg',
       desc: 'uma mordidinha pra acordar a mente',
       items: [
         { name: 'salto no escuro',     tag: 'leitura relâmpago',   desc: 'abre um livro aleatório, lê 1 parágrafo e escreve 1 frase de reação.' },
@@ -892,7 +891,7 @@
       color: '#cc1344',   // cereja
       colorSoft: 'rgba(204,19,68,0.10)',
       darkTag: true,
-      rosto: 'assets/rosto-22.png',
+      rosto: 'assets/rosto-pratos.svg',
       desc: 'se aprofundar, sem pressa',
       items: [
         { name: 'pomodoro de escrita', tag: 'fluxo contínuo',      desc: 'escreve sem parar por 20 minutos sobre qualquer tema. nada de editar — só vazar.' },
@@ -907,10 +906,10 @@
       id: 'desenho',
       name: 'desenho',
       time: '15 min',
-      color: '#003bce',   // cobalto
-      colorSoft: 'rgba(0,59,206,0.10)',
+      color: '#3b388c',   // índigo
+      colorSoft: 'rgba(59,56,140,0.10)',
       darkTag: true,
-      rosto: 'assets/rosto-06.png',
+      rosto: 'assets/rosto-desenho.svg',
       desc: 'deixar a mão pensar',
       items: [
         { name: 'retrato de memória',    tag: 'memória visual',        desc: 'desenha o rosto de alguém que você ama sem olhar pra foto nenhuma. só o que a memória guarda.' },
@@ -928,7 +927,7 @@
       color: '#ee7a77',   // coral
       colorSoft: 'rgba(238,122,119,0.18)',
       darkTag: false,
-      rosto: 'assets/rosto-11.png',
+      rosto: 'assets/rosto-escrita.svg',
       desc: 'soltar o que tá engasgado',
       items: [
         { name: 'haiku do agora',         tag: 'haiku',     desc: 'olha ao redor. escolhe um detalhe insignificante — uma sombra, um barulho, o cheiro do ar. escreve um haiku (5-7-5 sílabas) só sobre isso.' },
@@ -946,7 +945,7 @@
       color: '#550d24',   // vinho
       colorSoft: 'rgba(85,13,36,0.10)',
       darkTag: true,
-      rosto: 'assets/rosto-27.png',
+      rosto: 'assets/rosto-diario.svg',
       desc: 'uma pausa pra escutar você mesmo',
       items: [
         { name: 'descarregamento livre', tag: 'brain dump',       desc: 'a mente tá cheia? escreve tudo que está circulando sem parar, sem ponto, sem lógica. só esvaziar. quando parar de sair, para.' },
@@ -964,7 +963,7 @@
       color: '#005139',   // verde
       colorSoft: 'rgba(0,81,57,0.12)',
       darkTag: true,
-      rosto: 'assets/rosto-15.png',
+      rosto: 'assets/rosto-acompanhamentos.svg',
       desc: 'brincar à toa',
       items: [
         { name: 'doodle sem tema',     tag: 'desenho livre',          desc: 'papel em branco. caneta. começa com uma linha e vê onde ela vai. proibido planejar.' },
